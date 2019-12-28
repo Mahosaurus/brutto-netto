@@ -1,0 +1,23 @@
+{
+    "form": {
+        "f_start": "1",
+        "f_bruttolohn": "3000",
+        "f_abrechnungszeitraum": "monat",
+        "f_geld_werter_vorteil": "",
+        "f_abrechnungsjahr": "2019",
+        "f_steuerfreibetrag": "",
+        "f_steuerklasse": "3",
+        "f_kirche": "ja",
+        "f_bundesland": "baden-wuerttemberg",
+        "f_alter": "25",
+        "f_kinder": "nein",
+        "f_kinderfreibetrag": "0",
+        "f_krankenversicherung": "pflichtversichert",
+        "f_private_kv": "",
+        "f_arbeitgeberzuschuss_pkv": "ja",
+        "f_KVZ": "0.9",
+        "f_rentenversicherung": "pflichtversichert",
+        "f_arbeitslosenversicherung": "pflichtversichert",
+        "ok": 1
+    }
+}
