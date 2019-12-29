@@ -2,16 +2,23 @@ import json
 
 import requests
 
+def replace_values(payload, **kwargs):
+    payload['form'].update(kwargs)
+    return payload
+
 def convert_payload(payload):
     converted = ""
     for k, v in payload['form'].items():
         converted = converted + "&" + str(k) + "=" + str(v)
     return converted
 
-def request_website():
+def request_website(**kwargs):
     # Read json
     with open("apiconf/params.json") as json_file:
         payload = json.load(json_file)
+
+    # Replace
+    payload = replace_values(payload, **kwargs)
 
     # Convert
     payload = convert_payload(payload)

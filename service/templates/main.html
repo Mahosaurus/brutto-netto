@@ -1,0 +1,58 @@
+<html>
+    <style>
+        #myTable {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #myTable td, #myTable th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #myTable tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #myTable tr:hover {background-color: #ddd;}
+        
+        #myTable th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #4CAF50;
+          color: white;
+        }
+        </style>
+<h1>Enter your data</h1>
+
+<form method=post enctype=multipart/form-data>
+  <label for="f_bruttolohn">Bruttolohn</label> 
+  <input type=text value="3000 oder [1000,2000]" id="f_bruttolohn"><br>
+
+  <label for="f_abrechnungszeitraum">Abrechnungszeitraum</label>
+  <input type=text value="2020" id="f_abrechnungszeitraum"><br>
+
+  <label for="f_geld_werter_vorteil">Geldwerter Vorteil</label>
+  <input type=text value="0" id="f_geld_werter_vorteil"><br>
+
+  <label for="f_abrechnungsjahr">Abrechnungsjahr</label>
+  <input type=text value="2020" id="f_abrechnungsjahr"><br>
+
+  <input type=text value=f_steuerfreibetrag>
+  <input type=text value=f_steuerklasse>  
+  <input type=text value=f_kirche>
+  <input type=text value=f_bundesland>
+  <input type=text value=f_alter>
+  <input type=text value=f_kinder>
+  <input type=text value=f_kinderfreibetrag>
+  <input type=text value=f_krankenversicherung>
+  <input type=text value=f_private_kv>
+  <input type=text value=f_arbeitgeberzuschuss_pkv>  
+  <input type=text value=f_KVZ>
+  <input type=text value=f_rentenversicherung>
+  <input type=text value=f_arbeitslosenversicherung>
+  <button type="submit" value="senden">Eingaben absenden
+  </button>
+{{result}}
+
+</html>
