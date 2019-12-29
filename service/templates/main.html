@@ -3,12 +3,12 @@
         #myTable {
           font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
           border-collapse: collapse;
-          width: 100%;
+          width: 40%;
         }
         
-        #myTable td, #myTable th {
+        #myTable td, #myTable th, #myTable tr {
           border: 1px solid #ddd;
-          padding: 8px;
+          padding: 2px;
         }
         
         #myTable tr:nth-child(even){background-color: #f2f2f2;}
@@ -25,34 +25,137 @@
         </style>
 <h1>Enter your data</h1>
 
-<form method=post enctype=multipart/form-data>
-  <label for="f_bruttolohn">Bruttolohn</label> 
-  <input type=text value="3000 oder [1000,2000]" id="f_bruttolohn"><br>
+<div class="calculator_area">     
+  <form method="post">
+  <input type="hidden" name="f_start" value="1">
+  <input type="hidden" name="ok" value="1">
+<table class="rechner" cellpadding="0" cellspacing="0" border="0" width="50%", id=myTable>
+<tr>
+<th colspan="3">&nbsp;<b>Einkommen berechnen!</b>&nbsp;</th>
+</tr>
+<tr class="bg_punkt">
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Ihr Bruttoeinkommen</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,0)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left">&nbsp;<input class="inputbox" name="f_bruttolohn" id="f_bruttolohn" size="10" value="[3000, 4000]">&nbsp;<strong class="currency">&euro;</strong></td>	
+</tr>
+<tr>
+  <td align="left" class="left_column">&nbsp;Falls Intervall gegeben: Schrittfolge<span class='umbruch_display_none'><br />&nbsp;</span>&nbsp;</td>
+  <td class="right_column_align_left">&nbsp;<input class="inputbox" name="step" id="step" size="10" value="100"></td>	
+  </tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Abrechnungszeitraum:&nbsp;</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,1)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left column_font">&nbsp;<input class="radio" type="radio" name="f_abrechnungszeitraum" id="f_abrechnungszeitraum" value="jahr" ><span class='radio_text'>Jahr</span>
+&nbsp;<input class="radio" type="radio" name="f_abrechnungszeitraum" value="monat" checked="checked"><span class='radio_text'>Monat</span>&nbsp;</td>	
+</tr>
+<tr class="country_row_hide">
+<td align="left" class="left_column">&nbsp;Geldwerter Vorteil (monatlicher Wert):<br>&nbsp;<a href="https://www.brutto-netto-rechner.info/geldwerter-vorteil.php" class="small_link"><span class="hide_text">zum&nbsp;</span>Firmenwagenrechner</a>&nbsp;</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,6)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left">&nbsp;<input class="inputbox" name="f_geld_werter_vorteil" id="f_geld_werter_vorteil" size="10" value="0">&nbsp;<strong class="currency">&euro;</strong></td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Abrechnungsjahr:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_abrechnungsjahr" id="f_abrechnungsjahr" size="1" class="inputlist"><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019" selected="selected">2019</option><option value="2020">2020</option></select>&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Jährl. Steuerfreibetrag:&nbsp;</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,2)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left">&nbsp;<input class="inputbox" name="f_steuerfreibetrag" id="f_steuerfreibetrag" size="10" value="0">&nbsp;<strong class="currency">&euro;</strong></td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Steuerklasse:&nbsp;</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,3)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left">&nbsp;<select name="f_steuerklasse" id="f_steuerklasse" size="1" class="inputlist"><option value="1">Klasse 1</option><option value="2">Klasse 2</option><option value="3" selected="selected">Klasse 3</option><option value="4">Klasse 4</option><option value="5">Klasse 5</option><option value="6">Klasse 6</option></select>&nbsp;</td>	
+</tr>	
+<tr>
+<td align="left" class="left_column">&nbsp;In der Kirche?&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left column_font">&nbsp;<input class="radio" type="radio" name="f_kirche" id="f_kirche" value="ja" checked="checked">ja&nbsp;
+<input class="radio" type="radio" name="f_kirche" id="f_kirche" value="nein" >nein&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Ihr Bundesland:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_bundesland" id="f_bundesland" size="1" class="inputlist"><option value="baden-wuerttemberg"selected="selected">Baden-W&uuml;rttemberg</option><option value="bayern">Bayern</option><option value="berlin">Berlin</option><option value="brandenburg">Brandenburg</option><option value="bremen">Bremen</option><option value="hamburg">Hamburg</option><option value="hessen">Hessen</option><option value="mecklenburg-vorpommern">Mecklenburg-Vorpommern</option><option value="niedersachsen">Niedersachsen</option><option value="nordrhein-westfalen">Nordrhein-Westfalen</option><option value="rheinland-pfalz">Rheinland-Pfalz</option><option value="saarland">Saarland</option><option value="sachsen">Sachsen</option><option value="sachsen-anhalt">Sachsen-Anhalt</option><option value="schleswig-holstein">Schleswig-Holstein</option><option value="thueringen">Th&uuml;ringen</option></select>&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Ihr Alter:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select id="f_alter" name="f_alter" class="inputlist"><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25" selected="selected">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option><option value="60">60</option><option value="61">61</option><option value="62">62</option><option value="63">63</option><option value="64">64</option><option value="65">65</option><option value="66">66</option><option value="67">67</option><option value="68">68</option><option value="69">69</option><option value="70">70</option><option value="71">71</option><option value="72">72</option><option value="73">73</option><option value="74">74</option><option value="75">75</option></select>&nbsp;<strong class="currency">J</strong>&nbsp;</td>	
+</tr>
+<tr class="bg_punkt">
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Haben Sie Kinder?&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left column_font">&nbsp;<input class="radio" type="radio" name="f_kinder" id="f_kinder" value="ja" >ja&nbsp;
+<input class="radio" type="radio" name="f_kinder" id="f_kinder" value="nein" checked="checked">nein&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Kinderfreibetrag:&nbsp;</td>
+<td class="highlight_image"><a href="#" onmouseover="doTooltip(event,4)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></td>
+<td class="right_column_align_left">&nbsp;<select name="f_kinderfreibetrag" id="f_kinderfreibetrag" class="inputlist"><option value="0" selected="selected">0</option><option value="0.5">0.5</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option><option value="2.5">2.5</option><option value="3">3</option><option value="3.5">3.5</option><option value="4">4</option><option value="4.5">4.5</option><option value="5">5</option><option value="5.5">5.5</option><option value="6">6</option></select>&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;W&ouml;chentliche Arbeitsstunden:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_arbeitsstunden" id="f_arbeitsstunden" class="inputlist"><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40" selected="selected">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option><option value="60">60</option><option value="61">61</option><option value="62">62</option><option value="63">63</option><option value="64">64</option><option value="65">65</option><option value="66">66</option><option value="67">67</option><option value="68">68</option><option value="69">69</option><option value="70">70</option><option value="71">71</option><option value="72">72</option><option value="73">73</option><option value="74">74</option><option value="75">75</option><option value="76">76</option><option value="77">77</option><option value="78">78</option><option value="79">79</option><option value="80">80</option></select>&nbsp;</td>	
+</tr>
+<tr class="bg_punkt">
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Krankenversicherung:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_krankenversicherung" id="f_krankenversicherung" onchange="verbergen_2(form)" class="inputlist"><option value="pflichtversichert" selected>gesetzlich pflichtversichert</option><option value="privat_versichert">privatversichert</option><option value="freiwillig_versichert">freiwillig gesetzlich versichert</option></select>&nbsp;</td>	
+</tr>
+<tr id="a0" style="display:none;">
+<td align="left" class="left_column"><span id="a1" style="display:none;">&nbsp;Monatlicher Beitragzur PKV&nbsp;</span></td>
+<td class="highlight_image"><span id="a2" style="display:none;">&nbsp;</span></td>
+<td class="right_column_align_left"><span id="a3" style="display:none;">&nbsp;<input class="inputbox" name="f_private_kv" id="f_private_kv" size="10" value="">&nbsp;<strong class="currency">&euro;</strong>&nbsp;</span></td>	
+</tr>
+<tr id="b0" style="display:none;">
+<td align="left" class="left_column"><span id="b1" style="display:none;">&nbsp;Arbeitgeberzuschuss zur PKV&nbsp;</span></td>
+<td class="highlight_image"><span id="b2" style="display:none;">&nbsp;</span></td>
+<td class="right_column_align_left"><span id="b3" style="display:none;">&nbsp;<input class="radio" type="radio" name="f_arbeitgeberzuschuss_pkv" id="f_arbeitgeberzuschuss_pkv" value="ja" checked="checked">ja&nbsp;<input class="radio" type="radio" name="f_arbeitgeberzuschuss_pkv" id="f_arbeitgeberzuschuss_pkv" value="nein" >nein&nbsp;</span></td>	
+</tr>		
 
-  <label for="f_abrechnungszeitraum">Abrechnungszeitraum</label>
-  <input type=text value="2020" id="f_abrechnungszeitraum"><br>
 
-  <label for="f_geld_werter_vorteil">Geldwerter Vorteil</label>
-  <input type=text value="0" id="f_geld_werter_vorteil"><br>
+<tr id="c0" style="display:table-row;">
+<td align="left" class="left_column"><span id="c1" style="display:table-cell;">&nbsp;KV-Zusatzbeitrag:&nbsp;</span></td>
+<td class="highlight_image"><span id="c2" style="display:table-cell;"><a href="#" onmouseover="doTooltip(event,7)" onmouseout="hideTip()"><img align="top" src="https://www.brutto-netto-rechner.info/images/info.png"></a></span></td>
+<td class="right_column_align_left"><span id="c3" style="display:table-cell;">&nbsp;<input class="inputbox" name="f_KVZ" id="f_KVZ" size="3" value="0.9">&nbsp;<strong class="currency">&#037;</strong>&nbsp;</span></td>	
+</tr>		
+<tr>
+<td align="left" class="left_column">&nbsp;Rentenversicherung:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_rentenversicherung" id="f_rentenversicherung" class="inputlist"><option value="pflichtversichert" selected>gesetzlich pflichtversichert</option><option value="nicht_pflichtversichert">nicht gesetzlich versichert</option><option value="ag_pflichtanteil">nur Arbeitgeber-Anteil</option><option value="an_pflichtanteil">nur Arbeitnehmer-Anteil</option></select>&nbsp;</td>	
+</tr>
+<tr>
+<td align="left" class="left_column">&nbsp;Arbeitslosenversicherung:&nbsp;</td>
+<td class="highlight_image">&nbsp;</td>
+<td class="right_column_align_left">&nbsp;<select name="f_arbeitslosenversicherung" id="f_arbeitslosenversicherung" class="inputlist"><option value="pflichtversichert" selected>gesetzlich pflichtversichert</option><option value="nicht_pflichtversichert">nicht gesetzlich versichert</option><option value="ag_pflichtanteil">nur Arbeitgeber-Anteil</option><option value="an_pflichtanteil">nur Arbeitnehmer-Anteil</option></select>&nbsp;</td>	
+</tr>
+<tr>
+<td colspan="3" align="center"><input type="submit" class=button value="berechnen"><input name="ok" type="hidden" id="ok" value="1"></td>
+</tr>
+</form>
 
-  <label for="f_abrechnungsjahr">Abrechnungsjahr</label>
-  <input type=text value="2020" id="f_abrechnungsjahr"><br>
+</table>
+</div>
 
-  <input type=text value=f_steuerfreibetrag>
-  <input type=text value=f_steuerklasse>  
-  <input type=text value=f_kirche>
-  <input type=text value=f_bundesland>
-  <input type=text value=f_alter>
-  <input type=text value=f_kinder>
-  <input type=text value=f_kinderfreibetrag>
-  <input type=text value=f_krankenversicherung>
-  <input type=text value=f_private_kv>
-  <input type=text value=f_arbeitgeberzuschuss_pkv>  
-  <input type=text value=f_KVZ>
-  <input type=text value=f_rentenversicherung>
-  <input type=text value=f_arbeitslosenversicherung>
-  <button type="submit" value="senden">Eingaben absenden
-  </button>
-{{result}}
-
+<table id=myTable>
+{% for key, value in result.items() %}
+   <tr>
+        <th> {{ key }} </th>
+        <td> {{ value }} </td>
+   </tr>
+{% endfor %}
+</table>
+<img src="{{ img }}">
 </html>

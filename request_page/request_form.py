@@ -1,20 +1,24 @@
 import json
+import os
 
 import requests
 
 def replace_values(payload, **kwargs):
+    """ Adjusts post request by parameters """
     payload['form'].update(kwargs)
     return payload
 
 def convert_payload(payload):
+    """ Converts payload to website format (looks like Get) """
     converted = ""
     for k, v in payload['form'].items():
         converted = converted + "&" + str(k) + "=" + str(v)
     return converted
 
 def request_website(**kwargs):
+    """ The actual requesting """
     # Read json
-    with open("apiconf/params.json") as json_file:
+    with open(os.path.dirname(os.path.realpath(__file__)) + "/params.json") as json_file:
         payload = json.load(json_file)
 
     # Replace

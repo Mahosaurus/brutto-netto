@@ -1,8 +1,18 @@
 import re
+
+from collections import OrderedDict
 import numpy as np
 from bs4 import BeautifulSoup
 
+def sort_dict(diction):
+    """ Sorts the dict alphabetically """
+    out = OrderedDict()
+    for key in sorted(diction.keys()):
+        out[key] = diction[key]
+    return out
+
 def parse_res(respons):
+    """ Parses response from website """
     parsed_html = BeautifulSoup(respons, features="html.parser")
     text = parsed_html.body.find('div', attrs={'class':'calculator_area'}).text
     text = re.sub(r'[\s]+', ' ', text)
@@ -31,6 +41,7 @@ def parse_res(respons):
                 values[cur_entity + '_Jahr'] = np.float(word.replace(".", "").replace(",", "."))
             else:
                 continue
+    values = sort_dict(values)
     return values
 
 if __name__ == "__main__":
