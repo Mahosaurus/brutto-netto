@@ -17,7 +17,7 @@ def convert_payload(payload):
 
 def request_website(**kwargs):
     """ The actual requesting """
-    # Read json
+    # Read json with default values
     with open(os.path.dirname(os.path.realpath(__file__)) + "/params.json") as json_file:
         payload = json.load(json_file)
 
