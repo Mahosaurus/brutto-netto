@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 respons = wrapper(request_form)
                 respons = respons.decode("ISO-8859-1")
                 parsed_respons = parse_res.parse_res(respons)
-                
+
             # Range request
             else:
                 range_to_check = re.sub(r'[^a-zA-Z\d\s\,\.]+', '', request.form['f_bruttolohn'])
