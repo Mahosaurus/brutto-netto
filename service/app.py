@@ -38,9 +38,9 @@ except Exception as exc:
     print("Linux")
 
 def wrapper(request_form, bruttolohn=0):
-    if bruttolohn != 0:
-        request.form['f_bruttolohn'] = bruttolohn
-    return request_form.request_website(f_bruttolohn=request.form['f_bruttolohn'],
+    if bruttolohn == 0:
+        bruttolohn = request.form['f_bruttolohn']
+    return request_form.request_website(f_bruttolohn=bruttolohn,
                                         f_abrechnungszeitraum=request.form['f_abrechnungszeitraum'],
                                         f_geld_werter_vorteil=request.form['f_geld_werter_vorteil'],
                                         f_abrechnungsjahr=request.form['f_abrechnungsjahr'],
@@ -66,15 +66,15 @@ if __name__ == '__main__':
     @app.route('/', methods=['GET', 'POST'])
     def provide():
         if request.method == "POST":
-
-            # Single request
-            if "[" not in request.form['f_bruttolohn']:
+            app.logger.info(request.form)
+            if request.form['f_how'] == '1': # Single request
+                app.logger.info("single_netto")
                 respons = wrapper(request_form)
                 respons = respons.decode("ISO-8859-1")
                 parsed_respons = parse_res.parse_res(respons)
 
-            # Range request
-            else:
+            elif request.form['f_how'] == '2':
+                app.logger.info("Marginal Netto")
                 range_to_check = re.sub(r'[^a-zA-Z\d\s\,\.]+', '', request.form['f_bruttolohn'])
                 range_to_check = range_to_check.split(",")
 
@@ -91,16 +91,46 @@ if __name__ == '__main__':
 
                 # Logic
                 marg_gain = calculate.marginal_netto(results)
-                plotted = plots.plots(marg_gain)
 
-                img = io.BytesIO()
-                plotted.savefig(img, format='png')
+                plotted_marg_gain = plots.plots(marg_gain)
+                img1 = io.BytesIO()
+                plotted_marg_gain.savefig(img1, format='png')
+                img1.seek(0)
+                plot_url_marg_gain = base64.b64encode(img1.getvalue()).decode()
 
-                img.seek(0)
-                plot_url = base64.b64encode(img.getvalue()).decode()
+                return render_template("main.html",
+                                       result={},
+                                       img1='data:image/png;base64,{}'.format(plot_url_marg_gain))
 
-                return render_template("main.html", result={}, img='data:image/png;base64,{}'.format(plot_url))
+            # Range request
+            elif request.form['f_how'] == '3':
+                app.logger.info("Percentage Netto")
+                range_to_check = re.sub(r'[^a-zA-Z\d\s\,\.]+', '', request.form['f_bruttolohn'])
+                range_to_check = range_to_check.split(",")
 
+                results = []
+                for i in range(int(range_to_check[0].strip()),
+                               int(range_to_check[1].strip()),
+                               int(request.form['step'])):
+
+                    app.logger.info("Getting" + str(i))
+
+                    respons = wrapper(request_form, bruttolohn=i)
+                    respons = respons.decode("ISO-8859-1")
+                    results.append(parse_res.parse_res(respons))
+
+                # Logic
+                perc_netto = calculate.perc_netto(results)
+
+                plotted_perc_netto = plots.plots(perc_netto)
+                img1 = io.BytesIO()
+                plotted_perc_netto.savefig(img1, format='png')
+                img1.seek(0)
+                plot_url_perc_netto = base64.b64encode(img1.getvalue()).decode()
+
+                return render_template("main.html",
+                                       result={},
+                                       img1='data:image/png;base64,{}'.format(plot_url_perc_netto))
         else:
             # Get Request
             parsed_respons = {}

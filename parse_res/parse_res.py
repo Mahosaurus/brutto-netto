@@ -33,7 +33,6 @@ def parse_res(respons):
         if word in list_of_entities:
             cur_entity = word
             continue
-
         if cur_entity in list_of_entities:
             if cur_entity + "_Monat" not in values:
                 values[cur_entity + '_Monat'] = np.float(word.replace(".", "").replace(",", "."))
