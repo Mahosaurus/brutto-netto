@@ -1,6 +1,6 @@
 from setuptools import setup
 
 setup(
-   name='brutto-nettoi',
+   name='brutto-netto',
    packages=['brutto-netto'],  #same as name
 )

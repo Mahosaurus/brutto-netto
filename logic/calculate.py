@@ -1,34 +1,56 @@
 from copy import deepcopy
 from collections import OrderedDict
 
-def marginal_netto(results: dict):
+def adapter(request, results):
+    if request == "marg_netto":
+        return marginal_netto(results)
+    if request == "perc_netto":
+        return perc_netto(results)
+    if request == "marg_netto_wo_pension":
+        for entry in results:
+            entry['Netto_Monat'] = entry['Netto_Monat'] + entry['Rentenversicherung_Monat']
+        return marginal_netto(results)
+    if request == "perc_netto_wo_pension":
+        for entry in results:
+            entry['Netto_Monat'] = entry['Netto_Monat'] + entry['Rentenversicherung_Monat']
+        return perc_netto(results)
+
+def marginal_netto(results: list):
     """
-    Calculates the net change in income
+    Calculates the net out of an increase in income in %
+    x = (Netto(t+1)-Netto(t))/(Brutto(t+1)-Brutto(t)) * 100
     results: dict (All information)
     vals: dict (Income: Delta)
     """
     vals = OrderedDict()
-    marg_gain = []
+    netto = []
+    brutto = []
+
     for entry in results:
-        if not marg_gain:
-            marg_gain.append(entry['Netto_Monat'])
-            last = deepcopy(entry['Netto_Monat'])   
+        if not netto:
+            netto.append(entry['Netto_Monat'])
+            brutto.append(entry['Brutto_Monat'])
+            last_netto = deepcopy(entry['Netto_Monat'])
+            last_brutto = deepcopy(entry['Brutto_Monat'])
         else:
-            marg_gain.append(int(entry['Netto_Monat'])-last)
-            vals[int(entry['Brutto_Monat'])] = int(entry['Netto_Monat']-last)
-            last = deepcopy(entry['Netto_Monat'])
+            netto.append(int(entry['Netto_Monat'])-last_netto)
+            brutto.append(int(entry['Brutto_Monat'])-last_brutto)
+            vals[int(entry['Brutto_Monat'])] = int((entry['Netto_Monat']-last_netto)/(entry['Brutto_Monat']-last_brutto) * 100)
+            last_netto = deepcopy(entry['Netto_Monat'])
+            last_brutto = deepcopy(entry['Brutto_Monat'])
     print(vals)
     return vals
 
 
-def perc_netto(results: dict):
+def perc_netto(results: list):
     """
-    Calculates the share of netto to brutto
+    Calculates the share of netto to brutto in %
+    x = Netto/Brutto * 100
     results: dict (All information)
-    vals: dict (Income: Delta)
+    vals: dict (Income: Average percentage)
     """
     vals = OrderedDict()
     for entry in results:
-        vals[int(entry['Brutto_Monat'])] = int(entry['Netto_Monat']) / int(entry['Brutto_Monat']) * 100
+        vals[int(entry['Brutto_Monat'])] = int(entry['Netto_Monat'] / entry['Brutto_Monat'] * 100)
     print(vals)
     return vals
